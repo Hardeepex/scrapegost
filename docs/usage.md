@@ -4,6 +4,10 @@
 
 Since most of the work is done by the API, the job of a `SchemaScraper` is to make it easier to pass HTML and get valid output.
 
+## Using `src/main.py` Script
+
+The `src/main.py` script is an integral part of this processing pipeline. It initiates the workflow by using `selectolax` for preliminary HTML parsing to extract the crucial content from a web page. After this initial parsing step, the script uses `scrapeghost` for additional processing and filtering, conforming to the defined schemas.
+
 If you are going to go beyond the basics, it is important to understand the data flow:
 
 1. The page HTML is passed through any [preprocessors](#preprocessors).
@@ -30,6 +34,8 @@ While the flow above covers most cases, there is one special case that is worth 
 
 If you set the `auto_split_length` parameter to a positive integer, the HTML will be split into multiple requests where each
 request aims to be no larger than `auto_split_length` tokens.
+
+The new `src/main.py` script uses this auto-splitting feature to streamline the process of handling large HTML documents by first using `selectolax` to parse the HTML and then `scrapeghost` to filter the data.
 
 !!! warning
 
@@ -132,7 +138,7 @@ This is done as a proof of concept, and to help determine how big of an issue ha
 If you want to validate that the returned data isn't just JSON, but data in the format you expect, you can use `pydantic` models.
 
 ```python
---8<-- "docs/examples/pydantic_example.py"
+--8<-- "src/docs/examples/pydantic_example.py"
 ```
 ```log
 --8<-- "docs/examples/pydantic_example.log"
@@ -174,7 +180,7 @@ It then takes the combined "results" and returns them to the user.
 Here's a functional example that scrapes several pages of employees:
 
 ```python
---8<-- "docs/examples/yoyodyne.py"
+--8<-- "src/docs/examples/yoyodyne.py"
 ```
 
 !!! warning
