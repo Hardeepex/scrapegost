@@ -15,6 +15,7 @@ from .postprocessors import (
     JSONPostprocessor,
     PydanticPostprocessor,
 )
+from .normalizers import normalize_date, normalize_text, normalize_number
 
 
 class SchemaScraper(OpenAiCall):
@@ -138,22 +139,26 @@ class SchemaScraper(OpenAiCall):
         # apply preprocessors, returning a list of tags
         tags = self._apply_preprocessors(sr.parsed_html, extra_preprocessors or [])
 
+        # Extract raw data using the language model
+        raw_data = self._extract_raw_data(tags)
+
+        # Normalize the raw data
+        normalized_data = self._normalize_data(raw_data)
+
+        sr.data = normalized_data
         sr.auto_split_length = self.auto_split_length
-        if self.auto_split_length:
-            # if auto_split_length is set, split the tags into chunks and then recombine
-            chunks = _chunk_tags(tags, self.auto_split_length, model=self.models[0])
-            # Note: this will not work when the postprocessor is expecting
-            # ScrapedResponse (like HallucinationChecker)
-            all_responses = [self.request(chunk) for chunk in chunks]
-            return _combine_responses(sr, all_responses)
-        else:
-            # otherwise, scrape the whole document as one chunk
-            html = "\n".join(_tostr(t) for t in tags)
-            # apply postprocessors to the ScrapeResponse
-            # so that they can access the parsed HTML if needed
-            return self._apply_postprocessors(  # type: ignore
-                _combine_responses(sr, [self._api_request(html)])
-            )
+
+        return sr
+
+    def _extract_raw_data(self, tags):
+        # Send the HTML and schema to the language model with instructions to extract the data
+        # This is a placeholder and should be replaced with actual implementation
+        return {}
+
+    def _normalize_data(self, raw_data):
+        # Apply the appropriate lambda function to normalize the data
+        # This is a placeholder and should be replaced with actual implementation
+        return {}
 
     # allow the class to be called like a function
     __call__ = scrape
