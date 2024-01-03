@@ -1,5 +1,6 @@
 from scrapeghost import SchemaScraper, CSS
 from pprint import pprint
+from .redflagdeals_scraper import *
 
 url = "https://comedybangbang.fandom.com/wiki/Operation_Golden_Orb"
 schema = {

@@ -1,4 +1,5 @@
 from scrapeghost import SchemaScraper, CSS
+from .redflagdeals_scraper import *
 
 episode_list_scraper = SchemaScraper(
     "url",
