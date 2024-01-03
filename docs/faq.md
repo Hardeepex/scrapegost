@@ -42,11 +42,17 @@ If you'd like to use another library, do it as you usually would, but instead of
 
 ## What can I do if a page is too big?
 
-Try the following:
+Dealing with large pages requires a strategy that includes scoping and preprocessing. Here are some steps and examples to help you effectively handle large pages:
 
-1. Provide a CSS or XPath selector to limit the scope of the page.
+1. Use CSS or XPath selectors to narrow the focus of the page to significant areas. For example:
+- CSS: Use `.main-content` to target the main content area.
+- XPath: Use `//div[@class='product-list']/div` to select only the product list items.
 
-2. Pre-process the HTML. Trim tags or entire sections you don't need.  (You can use the preprocessing pipeline to help with this.)
+2. Pre-process the HTML by removing unnecessary sections, tags, or irrelevant data to streamline the scraping process. This could involve:
+- Stripping out `<script>` and `<style>` tags.
+- Removing comments or non-essential metadata.
+- Simplifying the DOM structure by eliminating redundant wrappers.
+Utilize the library's preprocessing features to automate such tasks wherever possible.
 
 3. Finally, you can use the `auto_split_length` parameter to split the page into smaller chunks.  This only works for list-type pages, and requires a good choice of selector to split the page up.
 

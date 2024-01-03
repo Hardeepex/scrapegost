@@ -210,7 +210,11 @@ If you do want to see the pieces put together, jump down to the [Putting it all 
 
 ## Next Steps
 
-If you're planning to use this library, please keep in mind it is very much in flux and I can't commit to API stability yet.
+If you're planning to use this library, please be aware that while core functionalities like the main scraping mechanisms are stable, certain auxiliary features and interfaces are subject to change. We are continuously working to improve the API based on user feedback and technological advances.
+
+To facilitate smooth transitions, all significant changes will be communicated in advance through our release notes, changelog, and direct notifications if necessary. We encourage you to keep an eye on the repository's 'Releases' section on GitHub, subscribe to our mailing list, or join our community forum to stay updated on the latest developments.
+
+Please rely on the documented interfaces for stable use, and treat undocument features as experimental and subject to change.
 
 If you are going to try to scrape using GPT, it'd probably be good to read the [OpenAI API](openai.md) page to understand a little more about how the underlying API works.
 
