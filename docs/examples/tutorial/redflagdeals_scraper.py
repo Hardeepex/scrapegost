@@ -11,7 +11,7 @@ listings_scraper = SchemaScraper(
         "dealer": "str",
         "comments_count": "int",
     },
-    extra_preprocessors=[CSS("div.list_item")],
+    extra_preprocessors=[CSS("div.list_item"), CSS("a.offer_image"), CSS("h2.offer_title"), CSS("p.offer_description")],
 )
 
 # Define the SchemaScraper for the single deal pages
@@ -19,6 +19,8 @@ deal_scraper = SchemaScraper(
     {
         "title": "str",
         "url": "url",
+        "image": "url",
+        "description": "str",
         "price": "float",
         "regular_price": "float",
         "details": "str",
