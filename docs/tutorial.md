@@ -27,7 +27,7 @@ Let's say we want to build a scraper that finds out each episode's title, episod
 We can do this by creating a `SchemaScraper` object and passing it a schema.
 
 ```python
---8<-- "docs/examples/tutorial/episode_scraper_1.py"
+--8<-- "src/docs/examples/tutorial/episode_scraper_1.py"
 ```
 
 There is no predefined way to define a schema, but a dictionary resembling the data you want to scrape where the keys are the names of the fields you want to scrape and the values are the types of the fields is a good place to start.
@@ -70,13 +70,13 @@ The `CSS` preprocessor will use this selector to extract the content of the elem
 
 
 ```python hl_lines="1 13 14"
---8<-- "docs/examples/tutorial/episode_scraper_2.py"
+--8<-- "src/docs/examples/tutorial/episode_scraper_2.py"
 ```
 
 Now, a call to our scraper will only pass the content of the `<div>` to OpenAI. We get the following output:
 
 ```log
---8<-- "docs/examples/tutorial/episode_scraper_2.log"
+--8<-- "src/docs/examples/tutorial/episode_scraper_2.log"
 ```
 
 We can see from the logging output that the content length is much shorter now and we get the data we were hoping for.
@@ -94,7 +94,7 @@ All for less than a penny!
 That was easy! Let's enhance our schema to include the list of guests as well as requesting the dates in a particular format.
 
 ```python hl_lines="8-9"
---8<-- "docs/examples/tutorial/episode_scraper_3.py"
+--8<-- "src/docs/examples/tutorial/episode_scraper_3.py"
 ```
 
 Just two small changes, but now we get the following output:
@@ -130,10 +130,10 @@ To simulate this, let's say we instead wanted to get the same information from a
 This page has a completely different layout. We will need to change our CSS selector:
 
 ```python hl_lines="4 14"
---8<-- "docs/examples/tutorial/episode_scraper_4.py"
+--8<-- "src/docs/examples/tutorial/episode_scraper_4.py"
 ```
 ```log hl_lines="11"
---8<-- "docs/examples/tutorial/episode_scraper_4.log"
+--8<-- "src/docs/examples/tutorial/episode_scraper_4.log"
 ```
 
 *Completely different HTML, one CSS selector change.*
@@ -149,7 +149,7 @@ You could deal with this with a bit of clean up, but you have another option at 
 --8<-- "docs/examples/tutorial/episode_scraper_5.py"
 ```
 ```log hl_lines="11"
---8<-- "docs/examples/tutorial/episode_scraper_5.log"
+--8<-- "src/docs/examples/tutorial/episode_scraper_5.log"
 ```
 
 At this point, you may be wondering if you'll ever need to write a web scraper again. 
@@ -163,7 +163,7 @@ Now that we have a scraper that can get the details of each episode, we want a s
 <https://comedybangbang.fandom.com/wiki/Category:Episodes> has a link to each of the episodes, perhaps we can just scrape that page?
 
 ```python
---8<-- "docs/examples/tutorial/list_scraper_v1.py"
+--8<-- "src/docs/examples/tutorial/list_scraper_v1.py"
 ```
 ```log
 scrapeghost.scrapers.TooManyTokens: HTML is 292918 tokens, max for gpt-3.5-turbo is 4096
@@ -180,7 +180,7 @@ But let's imagine that for some reason you don't want to, perhaps this is a one-
 `SchemaScraper` has a few options that will help, we'll change our scraper to use `auto_split_length`.
 
 ```python
---8<-- "docs/examples/tutorial/list_scraper_v2.py"
+--8<-- "src/docs/examples/tutorial/list_scraper_v2.py"
 ```
 
 We set the `auto_split_length` to 2000. This is the maximum number of tokens that will be passed to OpenAI in a single request.
@@ -195,7 +195,7 @@ This winds up needing to make over twenty requests, but can get there.
 
 ```log
         *relevant log lines shown for clarity*
---8<-- "docs/examples/tutorial/list_scraper_v2.log"
+--8<-- "src/docs/examples/tutorial/list_scraper_v2.log"
 ```
 
 As you can see, a couple of requests had to fall back to GPT-4, which raised the cost.
@@ -207,6 +207,16 @@ One option is to lower the `auto_split_length` a bit further. Many more requests
 But as promised, this is something that `scrapeghost` isn't currently very good at.
 
 If you do want to see the pieces put together, jump down to the [Putting it all Together](#putting-it-all-together) section.
+
+## Using `src/main.py` Script
+
+The `src/main.py` script is a new addition to the suite of tools provided. This script utilizes `selectolax` for the initial HTML parsing to efficiently extract relevant content from a webpage. After the initial parse, the content is passed to `scrapeghost` for further processing and filtering. Here is how you might utilize it:
+
+1. Execute the provided Python script `src/main.py`.
+2. The script takes HTML content and uses `selectolax` to parse the main data.
+3. Once the main data is extracted, it is handed off to `scrapeghost` which filters and processes it according to predefined schemas.
+
+You may consider wrapping this process in a function or integrate it into a larger automation workflow depending on your use case.
 
 ## Next Steps
 
@@ -226,5 +236,5 @@ You can also explore the [command line interface](cli.md) to see how you can use
 ## Putting it all Together
 
 ```python
---8<-- "docs/examples/tutorial/tutorial_final.py"
+--8<-- "src/docs/examples/tutorial/tutorial_final.py"
 ```
