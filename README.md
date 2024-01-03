@@ -19,6 +19,14 @@ Issues: [https://github.com/jamesturk/scrapeghost/issues](https://github.com/jam
 
 ## Features
 
+**`src/main.py` usage** - This script uses `selectolax` for initial HTML parsing to extract the main content of a webpage and then passes this data on to `scrapeghost` for further processing and filtering. To use the script, follow these instructions:
+
+```
+python src/main.py
+```
+
+This will process the content from a hardcoded URL and print out the extracted data according to the defined schema.
+
 The purpose of this library is to provide a convenient interface for exploring web scraping with GPT.
 
 While the bulk of the work is done by the GPT model, `scrapeghost` provides a number of features to make it easier to use.
