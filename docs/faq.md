@@ -12,7 +12,23 @@ Once I realized 3.5-turbo was an option, I was able to spend a lot more time tin
 
 ## Why would I use this instead of a traditional scraper?
 
-It is definitely great for quick prototypes. With the CLI tool, you can try a scrape in a *single command* without writing a line of code.
+It is definitely great for quick prototypes and ad-hoc data extraction. The CLI tool allows you to initiate a scraping session with a *single command* without writing any code, making it ideal for rapid testing and development.
+
+Advantages over traditional scrapers are several-fold:
+
+- **Flexibility in Unstructured Data Handling**: Traditional scrapers rely on fixed patterns or selectors, which may fail when a website changes. `scrapeghost`'s model-based approach is adept at interpreting unstructured data and adapts more gracefully to changes in page structure.
+
+- **Ease of Use for Non-Developers**: The ability to use natural language instructions makes `scrapeghost` more accessible to those without extensive programming or web scraping experience.
+
+- **Speed of Deployment**: Setting up `scrapeghost` is faster compared to writing a full-fledged scraper, saving valuable time especially when dealing with simple or one-off scraping tasks.
+
+However, there are also challenges and limitations to consider:
+
+- **Costs of API Usage**: While it can be efficient in terms of development time, costs can accumulate with extensive use of the API, especially for larger or more complex scraping tasks.
+
+- **Opaque Errors**: Troubleshooting is made harder by less transparent error messages, which could hinder understanding of why certain extractions fail.
+
+- **Dependence on Upstream Provider**: The reliance on OpenAI's models means any changes in their API, pricing, or availability can directly impact your scraping capabilities.
 This means you don't need to sink a bunch of time into deciding if it's worth it or not.
 
 Or, imagine a scraper that needs to run infrequently on a page that is likely to break in subtle ways between scrapes.
@@ -76,9 +92,19 @@ The `HallucinationChecker` class can be used to detect data that appears in the 
 
 ## How much did you spend developing this?
 
-So far, about $40 on API calls, switching to GPT-3.5 as the default made a big difference.
+So far, the expenditure on API calls is approximately $40, which reflects careful management of the tool's functionality to minimize costs.
 
-My most expensive call was a paginated GPT-4 call that cost $2.20.  I decided to add the cost-limiting features after that.
+Cost-Control Strategies:
+
+- **Max Cost Limiting**: It's possible to set a maximum cost at which the scraping tool will stop processing, ensuring that you never exceed your budget. For instance, a GPT-4 call that would normally cost $2.20 can be limited to a lower threshold.
+
+- **Selective Scraping**: Preprocess the HTML to target only the essential content or use split strategies to efficiently distribute API calls across sections of a page.
+
+- **Efficiency Adjustments**: Switching to models like GPT-3.5 can significantly reduce costs, providing a balance between performance and affordability. Optimization of prompts and careful configuration of tool parameters can also help keep the costs in check.
+
+- **Cost Tracking**: Keeping a close eye on the expenditure and adjusting your scraping strategy allows for incremental improvement in both cost-efficiency and the quality of results.
+
+These examples illustrate how integral cost management is to the sustainable use of scraping tools and highlight the importance of understanding and utilizing cost-limiting features.
 
 ## What's with the license?
 
