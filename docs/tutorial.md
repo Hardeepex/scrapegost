@@ -83,6 +83,37 @@ We can see from the logging output that the content length is much shorter now a
 
 All for less than a penny!
 
+### Best Practices for Efficient Scraping
+
+When constructing a web scraper, it is essential to follow best practices to ensure efficiency and robustness:
+
+- **Use Specific Selectors**: Choose selectors that target the specific content you need. This minimizes the amount of unnecessary HTML sent to the scraper and reduces the likelihood of it breaking when the page structure changes.
+
+- **Preprocess HTML**: Use preprocessors like `CSS` to extract relevant content before passing it to the scraper. Not only does this lower token count, but it also ensures that irrelevant content, such as comments and script tags, do not interfere.
+
+- **Error Handling**: Implement robust error handling to manage exceptions, such as `TooManyTokens`. When you encounter this error, consider using CSS selectors to reduce the HTML content size or splitting the content into smaller chunks that are within token limits for individual scraping operations.
+
+#### Example: Efficient Preprocessing and Error Handling
+
+In the case of the `TooManyTokens` error with our episode details scraper, we can add the `CSS` preprocessor step to avoid the error and streamline the scraping process.
+
+```python hl_lines="13 14"
+# Incorporate CSS preprocessor to focus on relevant content
+CSS("div.page-content").preprocess
+
+# Implementation of error handling
+try:
+    # Call to the scraper
+    data = episode_scraper(scrape_url).data
+except scrapeghost.scrapers.TooManyTokens as e:
+    # Handling the exception
+    print("Encountered error: ", e)
+    # Implement a strategy to reduce tokens, like preprocessing or splitting
+
+```
+
+By applying these techniques, we adhere to best practices for efficient and reliable scraping.
+
 !!! tip
 
     Even when the page fits under the token limit, it is still a good idea to pass a selector to limit the amount of content that OpenAI has to process.
@@ -202,7 +233,19 @@ As you can see, a couple of requests had to fall back to GPT-4, which raised the
 
 As a safeguard, the maximum cost for a single scrape is configured to $1 by default. If you want to change this, you can set the `max_cost` parameter.
 
-One option is to lower the `auto_split_length` a bit further. Many more requests means it takes even longer, but if you can stick to GPT-3.5-Turbo it was possible to get a scrape to complete for $0.13.
+One option is to lower the `auto_split_length` a bit further. This can help manage large pages and ensure each chunk stays within the token limits.
+
+### Use Cases for the Scraping Tool
+
+`scrapeghost` offers versatility for various scraping scenarios:
+
+- **Scraping Unstructured Text**: When dealing with unstructured data on web pages, the tool can help standardize and extract valuable information.
+
+- **Frequent Page Changes**: Pages that change regularly are challenging to scrape with static selectors. `scrapeghost`'s ability to understand context can be particularly useful here.
+
+- **Quick Prototyping**: When you need to create a proof-of-concept quickly, `scrapeghost` can scrape and structure data without the need for developing complex scraping logic specific to each site.
+
+Incorporating `scrapeghost` into these use cases can significantly streamline the data extraction process. Many more requests means it takes even longer, but if you can stick to GPT-3.5-Turbo it was possible to get a scrape to complete for $0.13.
 
 But as promised, this is something that `scrapeghost` isn't currently very good at.
 
