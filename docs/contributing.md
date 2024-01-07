@@ -8,9 +8,15 @@ We welcome contributions from everyone. This guide will help you get started.
 2. Clone your forked repository to your local machine.
 3. Install the project's dependencies. You can do this by running `pip install -r requirements.txt`.
 
-## Running Tests
+## Testing Your Changes
 
-To ensure that your changes do not break existing functionality, please run the project's test suite before submitting a pull request. You can run the tests by executing `pytest` in the project's root directory.
+It is crucial to test your changes to ensure they do not negatively impact existing functionality. Follow these steps to test your code:
+
+1. Write new test cases that cover the new features or improvements you are making.
+2. Run the existing project's test suite by executing `pytest` in the project's root directory. Ensure existing tests pass along with your new test cases.
+3. If tests fail, review your code, make the necessary corrections, and repeat the testing process.
+
+By thoroughly testing, you help maintain the robustness of Scrapegost.
 
 ## Submitting a Pull Request
 
